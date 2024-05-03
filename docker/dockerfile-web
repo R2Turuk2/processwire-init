@@ -5,8 +5,8 @@ FROM php:apache
 WORKDIR /
 
 # Install required PHP extensions
-RUN docker-php-ext-install pdo_mysql  \
-    && apt-get update && apt-get install -y zip
+RUN docker-php-ext-install pdo_mysql
+#RUN docker-php-ext-install
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
