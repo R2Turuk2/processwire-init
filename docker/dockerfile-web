@@ -1,0 +1,12 @@
+#sudo docker build -t website-timon-web:1.0 -f dockerfile-web .
+
+FROM php:apache
+
+WORKDIR /
+
+# Install required PHP extensions
+RUN docker-php-ext-install pdo_mysql  \
+    && apt-get update && apt-get install -y zip
+
+# Enable Apache mod_rewrite
+RUN a2enmod rewrite

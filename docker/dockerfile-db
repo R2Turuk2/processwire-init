@@ -1,0 +1,3 @@
+#sudo docker build -t website-timon-db:1.0 -f dockerfile-db .
+
+FROM mariadb:latest

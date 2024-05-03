@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  web:
+    container_name: website-web
+    image: website-web:1.0
+    ports:
+      - "4444:80"
+      - "4445:443"
+    volumes:
+      - ../website:/var/www/html
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    container_name: website-db
+    image: website-db:1.0
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+      MYSQL_DATABASE_FILE: /run/secrets/db_database
+      MYSQL_USER_FILE: /run/secrets/db_user
+      MYSQL_PASSWORD_FILE: /run/secrets/db_password
+    ports:
+      - "4446:3306"
+    volumes:
+      - ../database:/var/lib/mysql
+    networks:
+      - website-network
+    secrets:
+      - db_root_password
+      - db_database
+      - db_user
+      - db_password
+    restart: always
+
+networks:
+  website-network:
+    driver: bridge
+
+secrets:
+  db_root_password:
+    file: ./secrets/db_root_password.txt
+  db_database:
+    file: ./secrets/db_database.txt
+  db_user:
+    file: ./secrets/db_user.txt
+  db_password:
+    file: ./secrets/db_password.txt
