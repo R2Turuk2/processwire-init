@@ -6,13 +6,12 @@ services:
     image: web:1.0
     ports:
       - "4444:80"
-      - "4445:443"
     volumes:
       - ../website:/var/www/html
     depends_on:
       - db
     networks:
-      - website-network
+      - docker-testing-network
     restart: always
 
   db:
@@ -28,7 +27,7 @@ services:
     volumes:
       - ../database:/var/lib/mysql
     networks:
-      - website-network
+      - docker-testing-network
     secrets:
       - db_root_password
       - db_database
@@ -37,7 +36,7 @@ services:
     restart: always
 
 networks:
-  website-network:
+  docker-testing-network:
     driver: bridge
 
 secrets:
